@@ -2,4 +2,4 @@
 
 using Spectre.Console;
 
-AnsiConsole.Write(new Panel("[fuchsia]Hello [bold]World![/][/]"));
+AnsiConsole.Write(new Panel("[fuchsia]Hello [bold]App![/][/]"));
