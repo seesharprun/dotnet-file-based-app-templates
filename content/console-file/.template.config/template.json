@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json.schemastore.org/template",
+  "author": "seesharprun",
+  "classifications": ["Common", "Console", "File-Based"],
+  "identity": "seesharprun.console-file",
+  "name": "Console (File-Based App)",
+  "shortName": "console-file",
+  "sourceName": "Program",
+  "preferNameDirectory": false,
+  "tags": {
+    "language": "C#",
+    "type": "project"
+  },
+  "sources": [
+    {
+      "modifiers": [
+        {
+          "condition": "(!plain)",
+          "exclude": ["console.plain.cs"],
+          "rename": {
+            "console.default.cs": "console.cs"
+          }
+        },
+        {
+          "condition": "(plain)",
+          "exclude": ["console.default.cs"],
+          "rename": {
+            "console.plain.cs": "console.cs"
+          }
+        }
+      ]
+    }
+  ],
+  "symbols": {
+    "plain": {
+      "type": "parameter",
+      "datatype": "bool",
+      "defaultValue": "false",
+      "description": "Use plain Console.WriteLine output instead of Spectre.Console",
+      "displayName": "Plain console output",
+      "isRequired": false
+    }
+  }
+}

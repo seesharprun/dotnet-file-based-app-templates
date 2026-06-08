@@ -1,0 +1,82 @@
+name: Validate template project
+on:
+  pull_request:
+    branches: [main]
+jobs:
+  build:
+    name: Build and package
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: |
+            11.0.x
+            10.0.x
+      - name: Format
+        run: dotnet format templates.csproj --severity info --verify-no-changes
+      - name: Build
+        run: dotnet build --configuration release
+      - name: Pack
+        run: dotnet pack --configuration release --output ./pkg
+      - name: Upload package artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: template-package
+          path: pkg/*.nupkg
+  test:
+    name: Test (${{ matrix.scenario }})
+    runs-on: ubuntu-latest
+    needs: build
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - scenario: console-default
+            template: console-file
+            arguments: ""
+            checks: |
+              test -f console.cs
+              dotnet run console.cs
+          - scenario: console-plain
+            template: console-file
+            arguments: --plain
+            checks: |
+              test -f console.cs
+              grep -q "Console.WriteLine" console.cs
+          - scenario: webapi-file
+            template: webapi-file
+            arguments: ""
+            checks: |
+              test -f api.cs
+              test -f api.http
+              dotnet build api.cs
+    steps:
+      - name: Download package artifact
+        uses: actions/download-artifact@v8
+        with:
+          name: template-package
+          path: ./pkg
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: |
+            11.0.x
+            10.0.x
+      - name: Install template package
+        run: dotnet new install ./pkg/dotnet-file-based-app-templates.*.nupkg
+      - name: Verify template list by tag
+        run: dotnet new list --tag file-based
+      - name: Run smoke test
+        shell: bash
+        run: |
+          mkdir -p smoke/${{ matrix.scenario }}
+          cd smoke/${{ matrix.scenario }}
+          dotnet new ${{ matrix.template }} ${{ matrix.arguments }}
+          ${{ matrix.checks }}

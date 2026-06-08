@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json.schemastore.org/template",
+  "author": "seesharprun",
+  "classifications": ["Web", "ASP.NET", "File-Based"],
+  "identity": "seesharprun.webapi-file",
+  "name": "Web API (File-Based App)",
+  "shortName": "webapi-file",
+  "sourceName": "Program",
+  "preferNameDirectory": false,
+  "tags": {
+    "language": "C#",
+    "type": "project"
+  },
+  "symbols": {
+  }
+}

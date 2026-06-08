@@ -1,0 +1,40 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net10.0;net11.0</TargetFrameworks>
+    <RollForward>LatestMajor</RollForward>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <PackageId>dotnet-file-based-app-templates</PackageId>
+    <PackageVersion>0.0.0</PackageVersion>
+    <Title>.NET File-Based App Templates</Title>
+    <Authors>seesharprun</Authors>
+    <Description>Minimal dotnet new templates for .NET file-based apps.</Description>
+    <PackageTags>dotnet-template;dotnet-new;file-based-apps;templates</PackageTags>
+    <PackageProjectUrl>https://github.com/seesharprun/dotnet-file-based-app-templates</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/seesharprun/dotnet-file-based-app-templates</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageType>Template</PackageType>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>readme.md</PackageReadmeFile>
+    <PackageIcon>media/icon.png</PackageIcon>
+    <IncludeContentInPack>true</IncludeContentInPack>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <ContentTargetFolders>content</ContentTargetFolders>
+    <NoDefaultExcludes>true</NoDefaultExcludes>
+    <NoWarn>$(NoWarn);NU5128</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <LocalizeTemplates>false</LocalizeTemplates>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.TemplateEngine.Tasks" Version="*" PrivateAssets="all" IsImplicitlyDefined="true" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="content\**\*" Exclude="content\**\bin\**;content\**\obj\**" />
+    <Compile Remove="**\*" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="readme.md" Pack="true" PackagePath="\" />
+    <None Include="media\icon.png" Pack="true" PackagePath="media\" />
+  </ItemGroup>
+</Project>

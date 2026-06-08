@@ -1,0 +1,17 @@
+### Variables
+
+@host = http://localhost:5000
+
+### Get OpenAPI specification
+
+GET {{host}}/openapi/v1.json
+Accept: application/json
+
+### Greet with "Hello, World!"
+
+GET {{host}}/
+
+### Get sample data
+
+GET {{host}}/data
+Accept: application/json
